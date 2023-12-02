@@ -2,20 +2,28 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"strconv"
 	"strings"
 	"unicode"
 )
 
-func solve01() {
-	file := "resources/day01.txt"
-	lines := ReadLinesFrom(file)
+func main() {
+	file := "2023/01/input.txt"
+	lines := readLinesFrom(file)
 
 	part1Solution := solve01part1(lines)
 	fmt.Printf("Part 1: %d\n", part1Solution)
 
 	part2Solution := solve01part2(lines)
 	fmt.Printf("Part 2: %d\n", part2Solution)
+}
+
+func readLinesFrom(path string) []string {
+	inputByteStream, _ := os.ReadFile(path)
+	inputString := string(inputByteStream)
+	inputString = strings.TrimSpace(inputString)
+	return strings.Split(inputString, "\n")
 }
 
 func solve01part1(lines []string) int64 {

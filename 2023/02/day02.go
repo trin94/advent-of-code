@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"strconv"
 	"strings"
 )
@@ -17,18 +18,23 @@ type Game struct {
 	reveals []Reveal
 }
 
-func solve02() {
-	file := "resources/day02.txt"
-	lines := ReadLinesFrom(file)
+func main() {
+	file := "2023/02/input.txt"
+	lines := readLinesFrom(file)
 	games := parseGamesFrom(lines)
-
-	println(games)
 
 	part1Solution := solve02part1(games, 12, 13, 14)
 	fmt.Printf("Part 1: %d\n", part1Solution)
 
 	part2Solution := solve02part2(games)
 	fmt.Printf("Part 2: %d\n", part2Solution)
+}
+
+func readLinesFrom(path string) []string {
+	inputByteStream, _ := os.ReadFile(path)
+	inputString := string(inputByteStream)
+	inputString = strings.TrimSpace(inputString)
+	return strings.Split(inputString, "\n")
 }
 
 func parseGamesFrom(lines []string) []Game {
