@@ -7,19 +7,18 @@ import (
 	"unicode"
 )
 
-func main() {
-	inp01sample := "resources/day01.txt"
-	lines := ReadLines(inp01sample)
+func solve01() {
+	file := "resources/day01.txt"
+	lines := ReadLinesFrom(file)
 
-	part1Solution := part1(lines)
+	part1Solution := solve01part1(lines)
 	fmt.Printf("Part 1: %d\n", part1Solution)
 
-	part2Solution := part2(lines)
+	part2Solution := solve01part2(lines)
 	fmt.Printf("Part 2: %d\n", part2Solution)
-
 }
 
-func part1(lines []string) int64 {
+func solve01part1(lines []string) int64 {
 	var sum int64 = 0
 
 	for _, line := range lines {
@@ -43,9 +42,9 @@ func part1(lines []string) int64 {
 	return sum
 }
 
-func part2(lines []string) int64 {
-
+func solve01part2(lines []string) int64 {
 	var manipulatedLine []string
+
 	for _, line := range lines {
 		line = strings.ReplaceAll(line, "one", "O1E")
 		line = strings.ReplaceAll(line, "One", "O1E")
@@ -86,5 +85,5 @@ func part2(lines []string) int64 {
 		manipulatedLine = append(manipulatedLine, line)
 	}
 
-	return part1(manipulatedLine)
+	return solve01part1(manipulatedLine)
 }

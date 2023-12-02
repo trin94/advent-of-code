@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-func ReadLines(path string) []string {
+func ReadLinesFrom(path string) []string {
 	inputByteStream, _ := os.ReadFile(path)
 	inputString := string(inputByteStream)
 	inputString = strings.TrimSpace(inputString)
