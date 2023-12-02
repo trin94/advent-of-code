@@ -27,8 +27,8 @@ func solve02() {
 	part1Solution := solve02part1(games, 12, 13, 14)
 	fmt.Printf("Part 1: %d\n", part1Solution)
 
-	//part2Solution := solve01part2(lines)
-	//fmt.Printf("Part 2: %d\n", part2Solution)
+	part2Solution := solve02part2(games)
+	fmt.Printf("Part 2: %d\n", part2Solution)
 }
 
 func parseGamesFrom(lines []string) []Game {
@@ -99,4 +99,24 @@ func solve02part1(games []Game, maxRed int32, maxGreen int32, maxBlue int32) int
 	}
 
 	return gameIdSum
+}
+
+func solve02part2(games []Game) int32 {
+	var powers int32
+
+	for _, game := range games {
+		var atLeastRed int32
+		var atLeastGreen int32
+		var atLeastBlue int32
+
+		for _, reveal := range game.reveals {
+			atLeastRed = max(atLeastRed, reveal.red)
+			atLeastGreen = max(atLeastGreen, reveal.green)
+			atLeastBlue = max(atLeastBlue, reveal.blue)
+		}
+
+		powers += atLeastRed * atLeastGreen * atLeastBlue
+	}
+
+	return powers
 }
