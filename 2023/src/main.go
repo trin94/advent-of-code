@@ -1,5 +1,5 @@
 package main
 
 func main() {
-	solve01()
+	solve02()
 }
