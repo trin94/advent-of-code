@@ -27,10 +27,8 @@ type Mark struct {
 	character rune
 }
 
-// map with all marks "(x|y)"
-
 func main() {
-	file := "2023/03/input.txt"
+	file := "2023/03/input-sam.txt"
 	lines := readLinesFrom(file)
 	numbers := parseNumbersFrom(lines)
 	marks := parseMarksFrom(lines)
@@ -38,8 +36,8 @@ func main() {
 	part1Solution := solvePart1(numbers, marks)
 	fmt.Printf("Part 1: %d\n", part1Solution)
 
-	//part2Solution := solvePart2(games)
-	//fmt.Printf("Part 2: %d\n", part2Solution)
+	part2Solution := solvePart2(numbers, marks)
+	fmt.Printf("Part 2: %d\n", part2Solution)
 }
 
 func readLinesFrom(path string) []string {
@@ -119,6 +117,31 @@ func solvePart1(numbers []Number, marks []Mark) int32 {
 	return sum
 }
 
-func solvePart2() {
+func solvePart2(numbers []Number, marks []Mark) int32 {
+	starMarks := filter(marks, func(mark Mark) bool { return mark.character == '*' })
 
+	var sum int32
+
+	for _, mark := range starMarks {
+		var factors []int32
+		for _, number := range numbers {
+			if number.isConnectedTo(mark) {
+				factors = append(factors, number.value)
+			}
+		}
+		if len(factors) == 2 {
+			sum += factors[0] * factors[1]
+		}
+	}
+
+	return sum
+}
+
+func filter[T any](ss []T, test func(T) bool) (ret []T) {
+	for _, s := range ss {
+		if test(s) {
+			ret = append(ret, s)
+		}
+	}
+	return
 }
