@@ -23,10 +23,10 @@ func main() {
 	lines := readLinesFrom(file)
 	games := parseGamesFrom(lines)
 
-	part1Solution := solve02part1(games, 12, 13, 14)
+	part1Solution := solvePart1(games, 12, 13, 14)
 	fmt.Printf("Part 1: %d\n", part1Solution)
 
-	part2Solution := solve02part2(games)
+	part2Solution := solvePart2(games)
 	fmt.Printf("Part 2: %d\n", part2Solution)
 }
 
@@ -85,7 +85,7 @@ func parseGamesFrom(lines []string) []Game {
 	return games
 }
 
-func solve02part1(games []Game, maxRed int32, maxGreen int32, maxBlue int32) int32 {
+func solvePart1(games []Game, maxRed int32, maxGreen int32, maxBlue int32) int32 {
 	var gameIdSum int32
 
 	for _, game := range games {
@@ -107,7 +107,7 @@ func solve02part1(games []Game, maxRed int32, maxGreen int32, maxBlue int32) int
 	return gameIdSum
 }
 
-func solve02part2(games []Game) int32 {
+func solvePart2(games []Game) int32 {
 	var powers int32
 
 	for _, game := range games {

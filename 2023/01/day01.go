@@ -12,10 +12,10 @@ func main() {
 	file := "2023/01/input.txt"
 	lines := readLinesFrom(file)
 
-	part1Solution := solve01part1(lines)
+	part1Solution := solvePart1(lines)
 	fmt.Printf("Part 1: %d\n", part1Solution)
 
-	part2Solution := solve01part2(lines)
+	part2Solution := solvePart2(lines)
 	fmt.Printf("Part 2: %d\n", part2Solution)
 }
 
@@ -26,7 +26,7 @@ func readLinesFrom(path string) []string {
 	return strings.Split(inputString, "\n")
 }
 
-func solve01part1(lines []string) int64 {
+func solvePart1(lines []string) int64 {
 	var sum int64 = 0
 
 	for _, line := range lines {
@@ -50,7 +50,7 @@ func solve01part1(lines []string) int64 {
 	return sum
 }
 
-func solve01part2(lines []string) int64 {
+func solvePart2(lines []string) int64 {
 	var manipulatedLine []string
 
 	for _, line := range lines {
@@ -93,5 +93,5 @@ func solve01part2(lines []string) int64 {
 		manipulatedLine = append(manipulatedLine, line)
 	}
 
-	return solve01part1(manipulatedLine)
+	return solvePart1(manipulatedLine)
 }
