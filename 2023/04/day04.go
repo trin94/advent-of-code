@@ -12,7 +12,7 @@ type Card struct {
 	drawnNumbers   []string
 }
 
-func (card Card) countWinningDraws() (sum int32) {
+func (card Card) countWinningDraws() (sum int) {
 	for _, drawn := range card.drawnNumbers {
 		for _, winning := range card.winningNumbers {
 			if drawn == winning {
@@ -32,7 +32,7 @@ func main() {
 	part1Solution := solvePart1(cards)
 	fmt.Printf("Part 1: %d\n", part1Solution)
 
-	part2Solution := solvePart2()
+	part2Solution := solvePart2(cards)
 	fmt.Printf("Part 1: %d\n", part2Solution)
 }
 
@@ -67,6 +67,26 @@ func solvePart1(cards []Card) (result int32) {
 	return
 }
 
-func solvePart2() int32 {
-	return 0
+func solvePart2(cards []Card) (totalCards int) {
+	state := make(map[int]int, len(cards))
+
+	for id := range cards {
+		state[id+1] = 1
+	}
+
+	for cardIndex := 0; cardIndex < len(state); cardIndex++ {
+		card := cards[cardIndex]
+		cardId := cardIndex + 1
+		matchCount := card.countWinningDraws()
+
+		for a := cardIndex + 1; a <= cardIndex+matchCount; a++ {
+			state[a+1] = state[a+1] + state[cardId]
+		}
+	}
+
+	for cardIndex := 0; cardIndex < len(state); cardIndex++ {
+		totalCards += state[cardIndex+1]
+	}
+
+	return
 }
