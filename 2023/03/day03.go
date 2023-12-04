@@ -28,7 +28,7 @@ type Mark struct {
 }
 
 func main() {
-	file := "2023/03/input-sam.txt"
+	file := "2023/03/input.txt"
 	lines := readLinesFrom(file)
 	numbers := parseNumbersFrom(lines)
 	marks := parseMarksFrom(lines)
@@ -56,7 +56,9 @@ func parseNumbersFrom(lines []string) []Number {
 		var currentNumberEndX = -1
 
 		for x, character := range line {
-			if unicode.IsDigit(character) {
+			isDigit := unicode.IsDigit(character)
+
+			if isDigit {
 				currentNumber += string(character)
 				if currentNumberStartX == -1 {
 					currentNumberStartX = x
@@ -66,13 +68,13 @@ func parseNumbersFrom(lines []string) []Number {
 				}
 			}
 
-			if !unicode.IsDigit(character) || (unicode.IsDigit(character) && x == len(line)-1) {
+			isLastDigitInLine := isDigit && x == len(line)-1
+			if isLastDigitInLine || !isDigit {
 				if currentNumber != "" {
 					value, _ := strconv.ParseInt(currentNumber, 10, 0)
-					xStart := int32(currentNumberStartX)
 					numbers = append(numbers, Number{
-						xStart: xStart,
-						xEnd:   max(xStart, int32(currentNumberEndX)),
+						xStart: int32(currentNumberStartX),
+						xEnd:   int32(currentNumberEndX),
 						y:      int32(y),
 						value:  int32(value),
 					})
