@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math"
 	"os"
+	"slices"
 	"strconv"
 	"strings"
 )
@@ -23,6 +24,15 @@ func (ruleSet RuleSet) mapMy(seed int64) int64 {
 	return -1
 }
 
+func (ruleSet RuleSet) reverseMapMy(seed int64) int64 {
+	minApplicableValue := ruleSet.destinationRangeStart
+	maxApplicableValue := minApplicableValue + ruleSet.rangeLength - 1
+	if seed >= minApplicableValue && seed <= maxApplicableValue {
+		return ruleSet.sourceRangeStart - ruleSet.destinationRangeStart + seed
+	}
+	return -1
+}
+
 type Mapper struct {
 	ruleSets []RuleSet
 }
@@ -30,6 +40,16 @@ type Mapper struct {
 func (mapper Mapper) mapMy(seed int64) int64 {
 	for _, ruleSet := range mapper.ruleSets {
 		result := ruleSet.mapMy(seed)
+		if result != -1 {
+			return result
+		}
+	}
+	return seed
+}
+
+func (mapper Mapper) reverseMapMy(seed int64) int64 {
+	for _, ruleSet := range mapper.ruleSets {
+		result := ruleSet.reverseMapMy(seed)
 		if result != -1 {
 			return result
 		}
@@ -47,7 +67,7 @@ func main() {
 	part1Solution := solvePart1(seeds, mapper)
 	fmt.Printf("Part 1: %d\n", part1Solution)
 
-	part2Solution := solvePart2()
+	part2Solution := solvePart2(seeds, mapper)
 	fmt.Printf("Part 2: %d\n", part2Solution)
 }
 
@@ -103,6 +123,48 @@ func solvePart1(seeds []int64, mappers []Mapper) int64 {
 	return result
 }
 
-func solvePart2() (result int) {
-	return
+func solvePart2(seeds []int64, mappers []Mapper) int64 {
+	containedInSeed := containedInSeedRanges(seeds)
+
+	reversedMapper := slices.Clone(mappers)
+	slices.Reverse(reversedMapper)
+
+	var counter int64 = 0
+	for {
+		var possibleSeed = counter
+		for _, mapper := range reversedMapper {
+			possibleSeed = mapper.reverseMapMy(possibleSeed)
+		}
+		if containedInSeed(possibleSeed) {
+			return counter
+		}
+		counter++
+	}
+}
+
+func containedInSeedRanges(initialSeeds []int64) func(seed int64) bool {
+	// construct seed intervals
+	var intervals [][]int64
+	for i := 0; i < len(initialSeeds)-1; i++ {
+		if i%2 == 1 {
+			continue
+		}
+		var interval []int64
+		intervalStart := initialSeeds[i]
+		intervalEnd := intervalStart + initialSeeds[i+1] - 1
+		interval = append(interval, intervalStart)
+		interval = append(interval, intervalEnd)
+		intervals = append(intervals, interval)
+	}
+	// return a checker function that checks whether a seed is contained in those seed ranges
+	return func(seed int64) bool {
+		for _, interval := range intervals {
+			intervalStart := interval[0]
+			intervalEnd := interval[1]
+			if seed >= intervalStart && seed < intervalEnd {
+				return true
+			}
+		}
+		return false
+	}
 }
