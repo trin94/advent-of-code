@@ -33,7 +33,7 @@ func main() {
 	fmt.Printf("Part 1: %d\n", part1Solution)
 
 	part2Solution := solvePart2(cards)
-	fmt.Printf("Part 1: %d\n", part2Solution)
+	fmt.Printf("Part 2: %d\n", part2Solution)
 }
 
 func readLinesFrom(path string) []string {
