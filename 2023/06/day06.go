@@ -16,7 +16,7 @@ func main() {
 	part1Solution := solvePart1(times, records)
 	fmt.Printf("Part 1: %d\n", part1Solution)
 
-	part2Solution := solvePart2()
+	part2Solution := solvePart2(times, records)
 	fmt.Printf("Part 2: %d\n", part2Solution)
 }
 
@@ -57,6 +57,16 @@ func solvePart1(times []int, records []int) int {
 	return possibleWaysToBeatRecord
 }
 
-func solvePart2() (totalCards int) {
-	return
+func solvePart2(times []int, records []int) int {
+	t := ""
+	for _, time := range times {
+		t += strconv.Itoa(time)
+	}
+	time, _ := strconv.ParseInt(t, 10, 0)
+	r := ""
+	for _, record := range records {
+		r += strconv.Itoa(record)
+	}
+	record, _ := strconv.ParseInt(r, 10, 0)
+	return solvePart1([]int{int(time)}, []int{int(record)})
 }
