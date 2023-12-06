@@ -161,7 +161,7 @@ func containedInSeedRanges(initialSeeds []int64) func(seed int64) bool {
 		for _, interval := range intervals {
 			intervalStart := interval[0]
 			intervalEnd := interval[1]
-			if seed >= intervalStart && seed < intervalEnd {
+			if seed >= intervalStart && seed <= intervalEnd {
 				return true
 			}
 		}
