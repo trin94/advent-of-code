@@ -170,13 +170,11 @@ func main() {
 	lines := readLinesFrom(file)
 	camelCards := parseCamelCards(lines)
 
-	println("Higher")
-
 	part1Solution := solvePart1(camelCards)
 	fmt.Printf("Part 1: %d\n", part1Solution)
 
-	//part2Solution := solvePart2(times, records)
-	//fmt.Printf("Part 2: %d\n", part2Solution)
+	part2Solution := solvePart2(camelCards)
+	fmt.Printf("Part 2: %d\n", part2Solution)
 }
 
 func readLinesFrom(path string) []string {
@@ -218,6 +216,34 @@ func solvePart1(camelCards []CamelCard) (bids int) {
 	return
 }
 
-func solvePart2() int {
-	return 0
+func solvePart2(camelCards []CamelCard) int {
+	CharacterOrder = "AKQT98765432J"
+	upgradedCards := make([]CamelCard, len(camelCards))
+	for i, card := range camelCards {
+		upgradedCards[i] = card.upgrade()
+	}
+	return solvePart1(upgradedCards)
+}
+
+func (camelCard CamelCard) upgrade() CamelCard {
+	var frequencyCopy = make(map[rune]int)
+	var maxValue int
+	var maxValueKey rune
+	for k, v := range camelCard.handFrequency {
+		frequencyCopy[k] = v
+		if k != 'J' && v > maxValue {
+			maxValue = v
+			maxValueKey = k
+		}
+	}
+	jokerValue, jokerExists := camelCard.handFrequency['J']
+	if jokerExists {
+		delete(frequencyCopy, 'J')
+		frequencyCopy[maxValueKey] = frequencyCopy[maxValueKey] + jokerValue
+	}
+	return CamelCard{
+		hand:          camelCard.hand,
+		handFrequency: frequencyCopy,
+		bid:           camelCard.bid,
+	}
 }
