@@ -308,3 +308,4 @@ tags
 # End of https://www.toptal.com/developers/gitignore/api/intellij+all,rust,goland+all,pycharm+all,vim,emacs,visualstudiocode
 
 .idea
+*.input.txt
