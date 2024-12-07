@@ -1,0 +1,12 @@
+DAY := '09'
+
+_default:
+    @just --list
+
+# Test code
+test *ARGS:
+    go test './{{ DAY }}' {{ ARGS }}
+
+# Format code
+format:
+    go fmt './{{ DAY }}'
