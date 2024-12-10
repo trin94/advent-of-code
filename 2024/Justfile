@@ -1,4 +1,4 @@
-DAY := '09'
+DAY := '10'
 
 _default:
     @just --list
@@ -10,3 +10,4 @@ test *ARGS:
 # Format code
 format:
     go fmt './{{ DAY }}'
+
