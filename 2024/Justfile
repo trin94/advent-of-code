@@ -1,4 +1,4 @@
-DAY := '10'
+DAY := '11'
 
 _default:
     @just --list
