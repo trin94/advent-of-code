@@ -71,7 +71,7 @@ type MazeField struct {
 	coordinate     Coordinate
 	direction      Direction
 	cost           int
-	previousFields []*MazeField
+	previousFields []Coordinate
 }
 
 /// ###
@@ -91,7 +91,7 @@ func solvePuzzle2(path string) int {
 
 	for _, pathToEnd := range pathsToEnd {
 		for _, field := range pathToEnd.previousFields {
-			coordinates.Add(field.coordinate)
+			coordinates.Add(field)
 		}
 	}
 
@@ -117,17 +117,17 @@ func parseGrid(lines []string) (grid Grid, start Coordinate) {
 	panic("Could not find start and end coordinates")
 }
 
-func traverseMaze(grid Grid, start Coordinate, allResults bool) []*MazeField {
-	startField := &MazeField{start, East, 0, make([]*MazeField, 0)}
-	startField.previousFields = append(startField.previousFields, startField)
+func traverseMaze(grid Grid, start Coordinate, allResults bool) []MazeField {
+	startField := MazeField{start, East, 0, make([]Coordinate, 0)}
+	startField.previousFields = append(startField.previousFields, start)
 
-	visitNext := make([]*MazeField, 0)
+	visitNext := make([]MazeField, 0)
 	visitNext = append(visitNext, startField)
 
 	minimalCosts := map[Coordinate]int{}
 
 	maxCost := math.MaxInt
-	best := make([]*MazeField, 0)
+	best := make([]MazeField, 0)
 
 	costPuffer := 0
 	if allResults {
@@ -172,13 +172,13 @@ func traverseMaze(grid Grid, start Coordinate, allResults bool) []*MazeField {
 				continue
 			}
 
-			mazeField := &MazeField{coordinate: neighbor, direction: direction, cost: costs}
-			mazeField.previousFields = append(clone(current.previousFields), mazeField)
+			mazeField := MazeField{coordinate: neighbor, direction: direction, cost: costs}
+			mazeField.previousFields = append(clone(current.previousFields), neighbor)
 
 			if character == 'E' {
 				if maxCost > mazeField.cost {
 					maxCost = mazeField.cost
-					best = make([]*MazeField, 0)
+					best = make([]MazeField, 0)
 				}
 				best = append(best, mazeField)
 				continue
@@ -194,13 +194,14 @@ func traverseMaze(grid Grid, start Coordinate, allResults bool) []*MazeField {
 }
 
 func determineCost(source Direction, target Direction) int {
-	if source != target {
-		if (source+2)%4 == target {
-			return 2002
-		}
+	switch {
+	case source == target:
+		return 1
+	case (source+2)%4 == target:
+		return 2002
+	default:
 		return 1001
 	}
-	return 1
 }
 
 func clone[E comparable](slice []E) []E {

@@ -5,6 +5,7 @@ _default:
 
 # Test code
 test *ARGS:
+    go clean -testcache
     go test './{{ DAY }}' {{ ARGS }}
 
 # Format code
