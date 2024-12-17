@@ -2,10 +2,9 @@ package main
 
 import (
 	"fmt"
-	"os"
 	"regexp"
 	"strconv"
-	"strings"
+	"trin94/aoc/2024/inputs"
 )
 
 type Button struct {
@@ -25,7 +24,7 @@ type Machine struct {
 }
 
 func solvePuzzle1(path string) int {
-	lines := readLinesFrom(path)
+	lines := inputs.ReadLinesFrom(path)
 	machines := parseMachines(lines)
 
 	costs := 0
@@ -38,7 +37,7 @@ func solvePuzzle1(path string) int {
 }
 
 func solvePuzzle2(path string) int {
-	lines := readLinesFrom(path)
+	lines := inputs.ReadLinesFrom(path)
 	machines := parseMachines(lines)
 	machines = adjustPriceLocations(machines)
 
@@ -49,13 +48,6 @@ func solvePuzzle2(path string) int {
 	}
 
 	return costs
-}
-
-func readLinesFrom(path string) []string {
-	inputByteStream, _ := os.ReadFile(path)
-	inputString := string(inputByteStream)
-	inputString = strings.TrimSpace(inputString)
-	return strings.Split(inputString, "\n")
 }
 
 func parseMachines(lines []string) []Machine {

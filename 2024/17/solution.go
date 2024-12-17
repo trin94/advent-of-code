@@ -3,10 +3,10 @@ package main
 import (
 	"fmt"
 	"math"
-	"os"
 	"regexp"
 	"strconv"
 	"strings"
+	"trin94/aoc/2024/inputs"
 )
 
 type Instruction struct {
@@ -115,7 +115,7 @@ func (c *Computer) comboOperand(operand int) int {
 }
 
 func solvePuzzle1(path string) string {
-	lines := readLinesFrom(path)
+	lines := inputs.ReadLinesFrom(path)
 	computer, instructions := readProgram(lines)
 	return runProgram(&computer, instructions)
 }
@@ -161,7 +161,7 @@ func runProgram(computer *Computer, instructions []int) string {
 func solvePuzzle2(path string) int {
 	// copied and adapted from: https://github.com/Meez25/AOC2024/blob/main/day17/main.go
 
-	lines := readLinesFrom(path)
+	lines := inputs.ReadLinesFrom(path)
 	_, instructions := readProgram(lines)
 
 	a := 0
@@ -182,13 +182,6 @@ func solvePuzzle2(path string) int {
 	}
 
 	return a
-}
-
-func readLinesFrom(path string) []string {
-	inputByteStream, _ := os.ReadFile(path)
-	inputString := string(inputByteStream)
-	inputString = strings.TrimSpace(inputString)
-	return strings.Split(inputString, "\n")
 }
 
 func readProgram(lines []string) (Computer, []int) {

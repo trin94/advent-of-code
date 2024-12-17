@@ -2,25 +2,24 @@ package p03
 
 import (
 	"math"
-	"os"
 	"regexp"
 	"strconv"
-	"strings"
+	"trin94/aoc/2024/inputs"
 )
 
 var MultiPattern, _ = regexp.Compile("mul\\((\\d+),(\\d+)\\)")
 var DoPattern, _ = regexp.Compile("do\\(\\)")
 var DontPattern, _ = regexp.Compile("don't\\(\\)")
 
-func solvePuzzle1(path string) int64 {
-	lines := readLinesFrom(path)
+func solvePuzzle1(path string) int {
+	lines := inputs.ReadLinesFrom(path)
 
-	var sum int64
+	var sum int
 
 	for _, line := range lines {
 		for _, value := range MultiPattern.FindAllStringSubmatch(line, -1) {
-			x, _ := strconv.ParseInt(value[1], 10, 0)
-			y, _ := strconv.ParseInt(value[2], 10, 0)
+			x, _ := strconv.Atoi(value[1])
+			y, _ := strconv.Atoi(value[2])
 			sum += x * y
 		}
 	}
@@ -28,10 +27,10 @@ func solvePuzzle1(path string) int64 {
 	return sum
 }
 
-func solvePuzzle2(path string) int64 {
-	lines := readLinesFrom(path)
+func solvePuzzle2(path string) int {
+	lines := inputs.ReadLinesFrom(path)
 
-	var sum int64
+	var sum int
 	enabled := true
 
 	for _, line := range lines {
@@ -61,8 +60,8 @@ func solvePuzzle2(path string) int64 {
 				if idxMulti < idxDont {
 
 					value := MultiPattern.FindStringSubmatch(lineLeft)
-					x, _ := strconv.ParseInt(value[1], 10, 0)
-					y, _ := strconv.ParseInt(value[2], 10, 0)
+					x, _ := strconv.Atoi(value[1])
+					y, _ := strconv.Atoi(value[2])
 					sum += x * y
 					lineLeft = lineLeft[idxMulti:]
 
@@ -90,11 +89,4 @@ func solvePuzzle2(path string) int64 {
 	}
 
 	return sum
-}
-
-func readLinesFrom(path string) []string {
-	inputByteStream, _ := os.ReadFile(path)
-	inputString := string(inputByteStream)
-	inputString = strings.TrimSpace(inputString)
-	return strings.Split(inputString, "\n")
 }

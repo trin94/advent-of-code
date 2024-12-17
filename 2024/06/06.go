@@ -1,8 +1,7 @@
 package p06
 
 import (
-	"os"
-	"strings"
+	"trin94/aoc/2024/inputs"
 )
 
 // ###
@@ -131,7 +130,7 @@ func (g Grid) charAt(row int, col int) string {
 }
 
 func solvePuzzle1(path string) int {
-	lines := readLinesFrom(path)
+	lines := inputs.ReadLinesFrom(path)
 	grid := newGrid(lines)
 
 	visited := determineVisited(grid)
@@ -140,7 +139,7 @@ func solvePuzzle1(path string) int {
 }
 
 func solvePuzzle2(path string) int {
-	lines := readLinesFrom(path)
+	lines := inputs.ReadLinesFrom(path)
 
 	initialGrid := newGrid(lines)
 	initialMarker := initialGrid.startMarker()
@@ -193,13 +192,6 @@ func solvePuzzle2(path string) int {
 	}
 
 	return loopsFound
-}
-
-func readLinesFrom(path string) []string {
-	inputByteStream, _ := os.ReadFile(path)
-	inputString := string(inputByteStream)
-	inputString = strings.TrimSpace(inputString)
-	return strings.Split(inputString, "\n")
 }
 
 func determineVisited(grid Grid) Set[Coordinate] {

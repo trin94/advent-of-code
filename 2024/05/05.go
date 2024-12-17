@@ -115,9 +115,8 @@ func parseRules(rules []string) map[string]Set {
 		first := ruleSplit[0]
 		second := ruleSplit[1]
 
-		existingValue, ok := mmm[first] // check for existence
-		if ok {
-			existingValue.Add(second)
+		if value, exists := mmm[first]; exists {
+			value.Add(second)
 		} else {
 			s := NewSet()
 			s.Add(second)

@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"os"
 	"strings"
+	"trin94/aoc/2024/inputs"
 )
 
 type Coordinate struct {
@@ -231,7 +231,7 @@ func (g *Grid) determineCoordinatesToMove(coordinate Coordinate, deltaY int) ([]
 }
 
 func solvePuzzle1(path string) int {
-	lines := readLinesFrom(path)
+	lines := inputs.ReadLinesFrom(path)
 	grid, robotMovements := parseWarehouse(lines)
 	robot := grid.robotPosition()
 
@@ -253,7 +253,7 @@ func solvePuzzle1(path string) int {
 }
 
 func solvePuzzle2(path string) int {
-	lines := readLinesFrom(path)
+	lines := inputs.ReadLinesFrom(path)
 	grid, robotMovements := parseWarehouse(lines)
 	grid = scaleUpWarehouse(grid.lines)
 	robot := grid.robotPosition()
@@ -273,13 +273,6 @@ func solvePuzzle2(path string) int {
 	}
 
 	return gpsSum
-}
-
-func readLinesFrom(path string) []string {
-	inputByteStream, _ := os.ReadFile(path)
-	inputString := string(inputByteStream)
-	inputString = strings.TrimSpace(inputString)
-	return strings.Split(inputString, "\n")
 }
 
 func parseWarehouse(lines []string) (Grid, string) {

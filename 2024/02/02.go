@@ -1,13 +1,13 @@
 package p02
 
 import (
-	"os"
 	"strconv"
 	"strings"
+	"trin94/aoc/2024/inputs"
 )
 
-func solvePuzzle1(path string) (distances int64) {
-	lines := readLinesFrom(path)
+func solvePuzzle1(path string) (distances int) {
+	lines := inputs.ReadLinesFrom(path)
 	counter := 0
 
 	for _, line := range lines {
@@ -18,11 +18,11 @@ func solvePuzzle1(path string) (distances int64) {
 		}
 	}
 
-	return int64(counter)
+	return int(counter)
 }
 
-func solvePuzzle2(path string) (score int64) {
-	lines := readLinesFrom(path)
+func solvePuzzle2(path string) (score int) {
+	lines := inputs.ReadLinesFrom(path)
 	counter := 0
 
 	for _, line := range lines {
@@ -42,17 +42,10 @@ func solvePuzzle2(path string) (score int64) {
 		}
 	}
 
-	return int64(counter)
+	return int(counter)
 }
 
-func readLinesFrom(path string) []string {
-	inputByteStream, _ := os.ReadFile(path)
-	inputString := string(inputByteStream)
-	inputString = strings.TrimSpace(inputString)
-	return strings.Split(inputString, "\n")
-}
-
-func verifyLine(numbers []int64) bool {
+func verifyLine(numbers []int) bool {
 	first := numbers[0]
 	second := numbers[1]
 
@@ -83,21 +76,21 @@ func verifyLine(numbers []int64) bool {
 	return true
 }
 
-func splitAsIntSlice(slice string) []int64 {
-	result := make([]int64, 0)
+func splitAsIntSlice(slice string) []int {
+	result := make([]int, 0)
 	for _, value := range strings.Split(slice, " ") {
-		nr, _ := strconv.ParseInt(value, 10, 0)
+		nr, _ := strconv.Atoi(value)
 		result = append(result, nr)
 	}
 	return result
 }
 
-func remove(slice []int64, s int) []int64 {
+func remove(slice []int, s int) []int {
 	return append(slice[:s], slice[s+1:]...)
 }
 
-func clone(slice []int64) []int64 {
-	into := make([]int64, len(slice))
+func clone(slice []int) []int {
+	into := make([]int, len(slice))
 	copy(into, slice)
 	return into
 }

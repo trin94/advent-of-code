@@ -125,7 +125,6 @@ func compressFilesystemAlgorithm2(input []Space) []Space {
 		if gapFound {
 			for k, n := gapBegin, 1; k < gapEnd; k, n = k+1, n+1 {
 				idxFrom := lowerJ + n
-				//fmt.Printf("Move id=%d (idx=%d) to new idx=%d, continue in [%d-%d]\n", output[idxFrom].value, idxFrom, k, i, j)
 				output[k] = output[idxFrom]
 				output[idxFrom] = Space{value: -1, isFile: false}
 			}

@@ -1,9 +1,8 @@
 package main
 
 import (
-	"os"
 	"strconv"
-	"strings"
+	"trin94/aoc/2024/inputs"
 	"unicode"
 )
 
@@ -81,8 +80,8 @@ func (g Grid) HeightAt(row, col int) int {
 }
 
 func solvePuzzle1(path string) int {
-	numbers := readNumbersFrom(path)
-	grid := NewGrid(numbers)
+	lines := inputs.ReadLinesFrom(path)
+	grid := NewGrid(lines)
 
 	sum := 0
 
@@ -95,8 +94,8 @@ func solvePuzzle1(path string) int {
 }
 
 func solvePuzzle2(path string) int {
-	numbers := readNumbersFrom(path)
-	grid := NewGrid(numbers)
+	lines := inputs.ReadLinesFrom(path)
+	grid := NewGrid(lines)
 
 	sum := 0
 
@@ -105,13 +104,6 @@ func solvePuzzle2(path string) int {
 	}
 
 	return sum
-}
-
-func readNumbersFrom(path string) []string {
-	inputByteStream, _ := os.ReadFile(path)
-	inputString := string(inputByteStream)
-	inputString = strings.TrimSpace(inputString)
-	return strings.Split(inputString, "\n")
 }
 
 func countReachableSummits(grid *Grid, location Coordinate, nextHeight int) Set[Coordinate] {

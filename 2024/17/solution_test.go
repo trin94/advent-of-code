@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/stretchr/testify/assert"
 	"testing"
+	"trin94/aoc/2024/inputs"
 )
 
 func TestTextSample1(t *testing.T) {
@@ -37,28 +38,28 @@ func TestTextSample5(t *testing.T) {
 }
 
 func TestSample1(t *testing.T) {
-	input := "sample.1.txt"
+	input := inputs.SampleNr(17, 1)
 	expected := "4,6,3,5,6,3,5,2,1,0"
 	actual := solvePuzzle1(input)
 	assert.Equal(t, expected, actual)
 }
 
 func TestPuzzle1(t *testing.T) {
-	input := "input.txt"
+	input := inputs.Input(17)
 	expected := "7,4,2,5,1,4,6,0,4"
 	actual := solvePuzzle1(input)
 	assert.Equal(t, expected, actual)
 }
 
 func TestSample2(t *testing.T) {
-	input := "sample.2.txt"
+	input := inputs.SampleNr(17, 2)
 	expected := 117440
 	actual := solvePuzzle2(input)
 	assert.Equal(t, expected, actual)
 }
 
 func TestPuzzle2(t *testing.T) {
-	input := "input.txt"
+	input := inputs.Input(17)
 	expected := 164278764924605
 	actual := solvePuzzle2(input)
 	assert.Equal(t, expected, actual)

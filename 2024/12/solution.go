@@ -1,8 +1,7 @@
 package main
 
 import (
-	"os"
-	"strings"
+	"trin94/aoc/2024/inputs"
 )
 
 type Coordinate struct {
@@ -69,7 +68,7 @@ func (g Grid) charAtCoordinate(coordinate Coordinate) string {
 }
 
 func solvePuzzle1(path string) int {
-	lines := readLinesFrom(path)
+	lines := inputs.ReadLinesFrom(path)
 	grid := NewGrid(lines)
 
 	unvisited := NewSet[Coordinate]()
@@ -137,7 +136,7 @@ func visit(grid *Grid, coordinate Coordinate, currentArea *Set[Coordinate], curr
 }
 
 func solvePuzzle2(path string) int {
-	lines := readLinesFrom(path)
+	lines := inputs.ReadLinesFrom(path)
 	grid := NewGrid(lines)
 
 	unvisited := NewSet[Coordinate]()
@@ -178,13 +177,6 @@ func solvePuzzle2(path string) int {
 	}
 
 	return sum
-}
-
-func readLinesFrom(path string) []string {
-	inputByteStream, _ := os.ReadFile(path)
-	inputString := string(inputByteStream)
-	inputString = strings.TrimSpace(inputString)
-	return strings.Split(inputString, "\n")
 }
 
 func countCornersOfShape(currentArea *Set[Coordinate]) int {

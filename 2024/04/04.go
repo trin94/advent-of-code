@@ -1,8 +1,7 @@
 package p04
 
 import (
-	"os"
-	"strings"
+	"trin94/aoc/2024/inputs"
 )
 
 type Grid struct {
@@ -29,8 +28,8 @@ func (g Grid) charAt(row int, col int) string {
 	return string(g.lines[row][col])
 }
 
-func solvePuzzle1(path string) (distances int64) {
-	lines := readLinesFrom(path)
+func solvePuzzle1(path string) (distances int) {
+	lines := inputs.ReadLinesFrom(path)
 
 	grid := newGrid(lines)
 
@@ -62,11 +61,11 @@ func solvePuzzle1(path string) (distances int64) {
 		}
 	}
 
-	return int64(occurrences)
+	return occurrences
 }
 
-func solvePuzzle2(path string) (score int64) {
-	lines := readLinesFrom(path)
+func solvePuzzle2(path string) (score int) {
+	lines := inputs.ReadLinesFrom(path)
 
 	grid := newGrid(lines)
 
@@ -105,22 +104,15 @@ func solvePuzzle2(path string) (score int64) {
 		}
 	}
 
-	return int64(counter)
-}
-
-func readLinesFrom(path string) []string {
-	inputByteStream, _ := os.ReadFile(path)
-	inputString := string(inputByteStream)
-	inputString = strings.TrimSpace(inputString)
-	return strings.Split(inputString, "\n")
+	return counter
 }
 
 func count[T any](slice []T, f func(T) bool) int {
-	count := 0
+	c := 0
 	for i := range slice {
 		if f(slice[i]) {
-			count++
+			c++
 		}
 	}
-	return count
+	return c
 }

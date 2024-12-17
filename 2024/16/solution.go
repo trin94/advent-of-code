@@ -2,8 +2,7 @@ package main
 
 import (
 	"math"
-	"os"
-	"strings"
+	"trin94/aoc/2024/inputs"
 )
 
 type Direction int
@@ -77,14 +76,14 @@ type MazeField struct {
 /// ###
 
 func solvePuzzle1(path string) int {
-	lines := readLinesFrom(path)
+	lines := inputs.ReadLinesFrom(path)
 	grid, start := parseGrid(lines)
 	pathsToEnd := traverseMaze(grid, start, false)
 	return pathsToEnd[0].cost
 }
 
 func solvePuzzle2(path string) int {
-	lines := readLinesFrom(path)
+	lines := inputs.ReadLinesFrom(path)
 	grid, start := parseGrid(lines)
 	pathsToEnd := traverseMaze(grid, start, true)
 	coordinates := NewSet[Coordinate]()
@@ -96,13 +95,6 @@ func solvePuzzle2(path string) int {
 	}
 
 	return len(coordinates)
-}
-
-func readLinesFrom(path string) []string {
-	inputByteStream, _ := os.ReadFile(path)
-	inputString := string(inputByteStream)
-	inputString = strings.TrimSpace(inputString)
-	return strings.Split(inputString, "\n")
 }
 
 func parseGrid(lines []string) (grid Grid, start Coordinate) {

@@ -2,6 +2,7 @@ package main
 
 import (
 	"testing"
+	"trin94/aoc/2024/inputs"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -342,28 +343,28 @@ func TestCompressFilesystemAlgorithm2(t *testing.T) {
 }
 
 func TestSample1(t *testing.T) {
-	input := "sample.txt"
+	input := inputs.Sample(9)
 	expected := 1928
 	actual := solvePuzzle1(input)
 	assert.Equal(t, expected, actual)
 }
 
 func TestPuzzle1(t *testing.T) {
-	input := "input.txt"
+	input := inputs.Input(9)
 	expected := 6349606724455
 	actual := solvePuzzle1(input)
 	assert.Equal(t, expected, actual)
 }
 
 func TestSample2(t *testing.T) {
-	input := "sample.txt"
+	input := inputs.Sample(9)
 	expected := 2858
 	actual := solvePuzzle2(input)
 	assert.Equal(t, expected, actual)
 }
 
 func TestPuzzle2(t *testing.T) {
-	input := "input.txt"
+	input := inputs.Input(9)
 	expected := 6376648986651
 	actual := solvePuzzle2(input)
 	assert.Equal(t, expected, actual)

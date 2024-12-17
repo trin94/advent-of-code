@@ -2,13 +2,13 @@ package p07
 
 import (
 	"fmt"
-	"os"
 	"strconv"
 	"strings"
+	"trin94/aoc/2024/inputs"
 )
 
 func solvePuzzle1(path string) int {
-	lines := readLinesFrom(path)
+	lines := inputs.ReadLinesFrom(path)
 	matrix := buildOperatorMatrix()
 
 	sum := 0
@@ -30,7 +30,7 @@ func solvePuzzle1(path string) int {
 }
 
 func solvePuzzle2(path string) int {
-	lines := readLinesFrom(path)
+	lines := inputs.ReadLinesFrom(path)
 
 	sum := 0
 
@@ -46,13 +46,6 @@ func solvePuzzle2(path string) int {
 	}
 
 	return sum
-}
-
-func readLinesFrom(path string) []string {
-	inputByteStream, _ := os.ReadFile(path)
-	inputString := string(inputByteStream)
-	inputString = strings.TrimSpace(inputString)
-	return strings.Split(inputString, "\n")
 }
 
 func parseOperations(input string) (int, []int) {

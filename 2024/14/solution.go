@@ -1,10 +1,9 @@
 package main
 
 import (
-	"os"
 	"regexp"
 	"strconv"
-	"strings"
+	"trin94/aoc/2024/inputs"
 )
 
 type Coordinate struct {
@@ -21,7 +20,7 @@ type Velocity struct {
 }
 
 func solvePuzzle1(path string, spaceWidth int, spaceHeight int) int {
-	lines := readLinesFrom(path)
+	lines := inputs.ReadLinesFrom(path)
 	robots := parseRobotsFrom(lines)
 
 	northWest, northEast, southWest, southEast := 0, 0, 0, 0
@@ -68,7 +67,7 @@ func solvePuzzle1(path string, spaceWidth int, spaceHeight int) int {
 }
 
 func solvePuzzle2(path string, spaceWidth int, spaceHeight int) int {
-	lines := readLinesFrom(path)
+	lines := inputs.ReadLinesFrom(path)
 	robots := parseRobotsFrom(lines)
 
 	for times := 1; times < 100000; times++ {
@@ -92,13 +91,6 @@ func solvePuzzle2(path string, spaceWidth int, spaceHeight int) int {
 	}
 
 	return -1
-}
-
-func readLinesFrom(path string) []string {
-	inputByteStream, _ := os.ReadFile(path)
-	inputString := string(inputByteStream)
-	inputString = strings.TrimSpace(inputString)
-	return strings.Split(inputString, "\n")
 }
 
 func parseRobotsFrom(lines []string) []Robot {

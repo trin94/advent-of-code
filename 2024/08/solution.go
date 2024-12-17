@@ -3,8 +3,7 @@ package main
 import (
 	"fmt"
 	"math"
-	"os"
-	"strings"
+	"trin94/aoc/2024/inputs"
 	"unicode"
 )
 
@@ -72,7 +71,7 @@ func (g Grid) locationsOf(frequency string) []Coordinate {
 }
 
 func solvePuzzle1(path string) int {
-	lines := readLinesFrom(path)
+	lines := inputs.ReadLinesFrom(path)
 	grid := NewGrid(lines)
 	antiNodes := NewSet[Coordinate]()
 
@@ -116,7 +115,7 @@ func solvePuzzle1(path string) int {
 }
 
 func solvePuzzle2(path string) int {
-	lines := readLinesFrom(path)
+	lines := inputs.ReadLinesFrom(path)
 	grid := NewGrid(lines)
 	antiNodes := NewSet[Coordinate]()
 
@@ -164,13 +163,6 @@ func solvePuzzle2(path string) int {
 	}
 
 	return len(antiNodes)
-}
-
-func readLinesFrom(path string) []string {
-	inputByteStream, _ := os.ReadFile(path)
-	inputString := string(inputByteStream)
-	inputString = strings.TrimSpace(inputString)
-	return strings.Split(inputString, "\n")
 }
 
 func frequencyIdentifiers() []string {

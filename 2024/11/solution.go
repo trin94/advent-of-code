@@ -1,9 +1,9 @@
 package main
 
 import (
-	"os"
 	"strconv"
 	"strings"
+	"trin94/aoc/2024/inputs"
 )
 
 type StoneSteps struct {
@@ -14,7 +14,7 @@ type StoneSteps struct {
 var cache = make(map[StoneSteps]int)
 
 func solvePuzzle1(path string) int {
-	lines := readLinesFrom(path)
+	lines := inputs.ReadLinesFrom(path)
 	numbers := splitNumbers(lines[0])
 	sum := 0
 	for _, number := range numbers {
@@ -24,20 +24,13 @@ func solvePuzzle1(path string) int {
 }
 
 func solvePuzzle2(path string) int {
-	lines := readLinesFrom(path)
+	lines := inputs.ReadLinesFrom(path)
 	numbers := splitNumbers(lines[0])
 	sum := 0
 	for _, number := range numbers {
 		sum += count(number, 75)
 	}
 	return sum
-}
-
-func readLinesFrom(path string) []string {
-	inputByteStream, _ := os.ReadFile(path)
-	inputString := string(inputByteStream)
-	inputString = strings.TrimSpace(inputString)
-	return strings.Split(inputString, "\n")
 }
 
 func splitNumbers(input string) []int {

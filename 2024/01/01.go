@@ -1,14 +1,14 @@
 package p01
 
 import (
-	"os"
 	"slices"
 	"strconv"
 	"strings"
+	"trin94/aoc/2024/inputs"
 )
 
-func solvePuzzle1(path string) (distances int64) {
-	lines := readLinesFrom(path)
+func solvePuzzle1(path string) (distances int) {
+	lines := inputs.ReadLinesFrom(path)
 	left, right := prepareSlices(lines)
 
 	slices.Sort(left)
@@ -28,11 +28,11 @@ func solvePuzzle1(path string) (distances int64) {
 	return
 }
 
-func solvePuzzle2(path string) (score int64) {
-	lines := readLinesFrom(path)
+func solvePuzzle2(path string) (score int) {
+	lines := inputs.ReadLinesFrom(path)
 	left, right := prepareSlices(lines)
 
-	rightCounter := make(map[int64]int64, len(right))
+	rightCounter := make(map[int]int, len(right))
 
 	for _, r := range right {
 		_, ok := rightCounter[r]
@@ -53,21 +53,14 @@ func solvePuzzle2(path string) (score int64) {
 	return
 }
 
-func readLinesFrom(path string) []string {
-	inputByteStream, _ := os.ReadFile(path)
-	inputString := string(inputByteStream)
-	inputString = strings.TrimSpace(inputString)
-	return strings.Split(inputString, "\n")
-}
-
-func prepareSlices(lines []string) ([]int64, []int64) {
-	var left []int64
-	var right []int64
+func prepareSlices(lines []string) ([]int, []int) {
+	var left []int
+	var right []int
 
 	for _, line := range lines {
 		split := strings.SplitN(line, "   ", 2)
-		l, _ := strconv.ParseInt(split[0], 10, 0)
-		r, _ := strconv.ParseInt(split[1], 10, 0)
+		l, _ := strconv.Atoi(split[0])
+		r, _ := strconv.Atoi(split[1])
 		left = append(left, l)
 		right = append(right, r)
 	}
