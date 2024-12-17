@@ -1,4 +1,4 @@
-DAY := '16'
+DAY := '17'
 
 _default:
     @just --list
@@ -12,3 +12,74 @@ test *ARGS:
 format:
     go fmt './{{ DAY }}'
 
+add-day DAY:
+    #!/usr/bin/env bash
+    DIRECTORY="$(seq -f "%02g" {{ DAY }} {{ DAY }})"
+    mkdir "$DIRECTORY" || exit 1
+
+    touch "$DIRECTORY/input.txt"
+    touch "$DIRECTORY/sample.txt"
+
+    cat > "$DIRECTORY/solution.go" <<EOF
+    package main
+
+    import (
+    	"os"
+    	"strings"
+    )
+
+    func solvePuzzle1(path string) int {
+    	// lines := readLinesFrom(path)
+    	return 0
+    }
+
+    func solvePuzzle2(path string) int {
+    	// lines := readLinesFrom(path)
+    	return 0
+    }
+
+    func readLinesFrom(path string) []string {
+    	inputByteStream, _ := os.ReadFile(path)
+    	inputString := string(inputByteStream)
+    	inputString = strings.TrimSpace(inputString)
+    	return strings.Split(inputString, "\n")
+    }
+    EOF
+
+    cat > "$DIRECTORY/solution_test.go" <<EOF
+    package main
+
+    import (
+    	"github.com/stretchr/testify/assert"
+    	"testing"
+    )
+
+    func TestSample1(t *testing.T) {
+    	input := "sample.txt"
+    	expected := 1
+    	actual := solvePuzzle1(input)
+    	assert.Equal(t, expected, actual)
+    }
+
+    func TestPuzzle1(t *testing.T) {
+    	input := "input.txt"
+    	expected := 1
+    	actual := solvePuzzle1(input)
+    	assert.Equal(t, expected, actual)
+    }
+
+    func TestSample2(t *testing.T) {
+    	input := "sample.txt"
+    	expected := 1
+    	actual := solvePuzzle2(input)
+    	assert.Equal(t, expected, actual)
+    }
+
+    func TestPuzzle2(t *testing.T) {
+    	input := "input.txt"
+    	expected := 1
+    	actual := solvePuzzle2(input)
+    	assert.Equal(t, expected, actual)
+    }
+    EOF
+    just format
