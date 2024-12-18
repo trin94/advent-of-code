@@ -10,9 +10,11 @@ import (
 	"trin94/aoc/2024/utils"
 )
 
+const MaxDistance = math.MaxInt32
+
 type Vertex struct {
 	Key   utils.Coordinate
-	Edges map[*Vertex]int
+	Edges map[utils.Coordinate]int
 }
 
 func solvePuzzle1(path string, size, corrupted int) int {
@@ -70,7 +72,7 @@ func buildGraph(size int, corruptedLocations map[utils.Coordinate]struct{}) map[
 		for c := 0; c <= size; c++ {
 			coordinate := utils.Coordinate{Row: r, Col: c}
 			if _, corrupt := corruptedLocations[coordinate]; !corrupt {
-				vertex := Vertex{Key: coordinate, Edges: make(map[*Vertex]int)}
+				vertex := Vertex{Key: coordinate, Edges: make(map[utils.Coordinate]int)}
 				vertices[coordinate] = &vertex
 			}
 		}
@@ -80,7 +82,7 @@ func buildGraph(size int, corruptedLocations map[utils.Coordinate]struct{}) map[
 		{Row: -1, Col: 0}, // north
 		{Row: 0, Col: 1},  // east
 		{Row: 1, Col: 0},  // south
-		{Row: 0, Col: -1}, // south
+		{Row: 0, Col: -1}, // west
 	}
 
 	for coordinate, vertex := range vertices {
@@ -89,8 +91,8 @@ func buildGraph(size int, corruptedLocations map[utils.Coordinate]struct{}) map[
 				Col: coordinate.Col + adjacent.Col,
 				Row: coordinate.Row + adjacent.Row,
 			}
-			if neighbor, found := vertices[neighborCoordinate]; found {
-				vertex.Edges[neighbor] = 1
+			if _, found := vertices[neighborCoordinate]; found {
+				vertex.Edges[neighborCoordinate] = 1
 			}
 		}
 	}
@@ -98,7 +100,7 @@ func buildGraph(size int, corruptedLocations map[utils.Coordinate]struct{}) map[
 	return vertices
 }
 
-// Dijkstra copied from https://reintech.io/blog/dijkstras-algorithm-in-go
+// Dijkstra copied and adapted from https://reintech.io/blog/dijkstras-algorithm-in-go
 func Dijkstra(graph map[utils.Coordinate]*Vertex, start utils.Coordinate) (map[utils.Coordinate]int, error) {
 	_, ok := graph[start]
 	if !ok {
@@ -107,7 +109,7 @@ func Dijkstra(graph map[utils.Coordinate]*Vertex, start utils.Coordinate) (map[u
 
 	distances := make(map[utils.Coordinate]int)
 	for key := range graph {
-		distances[key] = math.MaxInt32
+		distances[key] = MaxDistance
 	}
 	distances[start] = 0
 
@@ -117,7 +119,7 @@ func Dijkstra(graph map[utils.Coordinate]*Vertex, start utils.Coordinate) (map[u
 	}
 
 	for len(vertices) != 0 {
-		sort.SliceStable(vertices, func(i, j int) bool {
+		sort.Slice(vertices, func(i, j int) bool {
 			return distances[vertices[i].Key] < distances[vertices[j].Key]
 		})
 
@@ -126,8 +128,8 @@ func Dijkstra(graph map[utils.Coordinate]*Vertex, start utils.Coordinate) (map[u
 
 		for adjacent, cost := range vertex.Edges {
 			alt := distances[vertex.Key] + cost
-			if alt < distances[adjacent.Key] {
-				distances[adjacent.Key] = alt
+			if alt < distances[adjacent] {
+				distances[adjacent] = alt
 			}
 		}
 	}
@@ -137,24 +139,26 @@ func Dijkstra(graph map[utils.Coordinate]*Vertex, start utils.Coordinate) (map[u
 
 func searchFirstCutOff(corrupted []utils.Coordinate, size int, start, end utils.Coordinate) utils.Coordinate {
 
-	for index, stepSize := 0, len(corrupted)/2; ; index = index + stepSize {
+	center := (len(corrupted) - 1) / 2
+	window, index := center, center
 
-		coordinates := corrupted[:index+stepSize]
-		graph := buildGraph(size, toMap(coordinates))
+	for window > 1 {
 
+		graph := buildGraph(size, toMap(corrupted[0:index]))
 		distances, _ := Dijkstra(graph, start)
 		distanceToEnd := distances[end]
+		possibleToReachEnd := distanceToEnd != MaxDistance
 
-		possibleToReachEnd := distanceToEnd != math.MaxInt32
+		window = window / 2
 
-		if stepSize == 1 && !possibleToReachEnd {
-			return corrupted[index]
-		}
-
-		if !possibleToReachEnd {
-			index -= stepSize
-			stepSize /= 2
+		if possibleToReachEnd {
+			index += window
+		} else {
+			index -= window
 		}
 
 	}
+
+	return corrupted[index]
+
 }
