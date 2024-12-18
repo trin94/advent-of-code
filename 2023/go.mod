@@ -1,4 +1,4 @@
-module trin94/aoc/2024
+module trin94/aoc/2023
 
 go 1.23.3
 

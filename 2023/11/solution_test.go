@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/stretchr/testify/assert"
 	"testing"
-	"trin94/aoc/2024/inputs"
+	"trin94/aoc/2023/inputs"
 )
 
 func TestSample1(t *testing.T) {

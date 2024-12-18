@@ -2,8 +2,8 @@ package main
 
 import (
 	"math"
-	"trin94/aoc/2024/inputs"
-	"trin94/aoc/2024/utils"
+	"trin94/aoc/2023/inputs"
+	"trin94/aoc/2023/utils"
 )
 
 func solvePuzzle1(path string) int {
