@@ -9,7 +9,7 @@ func solvePuzzle1(path string) (result int) {
 	lines := inputs.ReadLinesFrom(path)
 	patterns, designs := parsePuzzleInput(lines)
 	for _, design := range designs {
-		if canProduce(design, &patterns) {
+		if canProduce(design, patterns) {
 			result++
 		}
 	}
@@ -21,7 +21,7 @@ func solvePuzzle2(path string) (result int) {
 	patterns, designs := parsePuzzleInput(lines)
 	cache := make(map[string]int)
 	for _, design := range designs {
-		result += canProduceCount(design, &patterns, &cache)
+		result += canProduceCount(design, patterns, cache)
 	}
 	return
 }
@@ -35,11 +35,11 @@ func parsePuzzleInput(lines []string) (patterns, designs []string) {
 	return patterns, designs
 }
 
-func canProduce(design string, patterns *[]string) bool {
+func canProduce(design string, patterns []string) bool {
 	if len(design) == 0 {
 		return true
 	}
-	for _, pattern := range *patterns {
+	for _, pattern := range patterns {
 		trimmed := strings.TrimSuffix(design, pattern)
 		if trimmed == design {
 			continue
@@ -51,15 +51,15 @@ func canProduce(design string, patterns *[]string) bool {
 	return false
 }
 
-func canProduceCount(design string, patterns *[]string, cache *map[string]int) int {
+func canProduceCount(design string, patterns []string, cache map[string]int) int {
 	if len(design) == 0 {
 		return 1
 	}
-	if possibilities, found := (*cache)[design]; found {
+	if possibilities, found := cache[design]; found {
 		return possibilities
 	}
 	possibilities := 0
-	for _, pattern := range *patterns {
+	for _, pattern := range patterns {
 		trimmed := strings.TrimSuffix(design, pattern)
 		if trimmed == design {
 			continue
@@ -67,7 +67,7 @@ func canProduceCount(design string, patterns *[]string, cache *map[string]int) i
 		possibilities += canProduceCount(trimmed, patterns, cache)
 	}
 	if possibilities > 0 {
-		(*cache)[design] = possibilities
+		cache[design] = possibilities
 	}
 	return possibilities
 }
