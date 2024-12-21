@@ -1,5 +1,7 @@
 package utils
 
+import "math"
+
 func Clone[E comparable](slice []E) []E {
 	var dst []E
 	return append(dst, slice...)
@@ -17,4 +19,8 @@ func MaxInt(a, b int) int {
 		return a
 	}
 	return b
+}
+
+func AbsInt(a int) int {
+	return int(math.Abs(float64(a)))
 }
