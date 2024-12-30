@@ -1,4 +1,4 @@
-DAY := '13'
+DAY := '14'
 
 _default:
     @just --list
