@@ -1,4 +1,4 @@
-DAY := '15'
+DAY := '16'
 
 _default:
     @just --list
@@ -72,3 +72,4 @@ add-day DAY SAMPLE="1":
     // }
     EOF
     just format
+
