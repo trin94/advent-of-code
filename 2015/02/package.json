@@ -1,0 +1,36 @@
+{
+	"name": "02",
+	"private": true,
+	"devDependencies": {
+		"@biomejs/biome": "^2.3.5",
+		"@types/bun": "latest"
+	},
+	"peerDependencies": {
+		"typescript": "^5"
+	},
+	"biome": {
+		"$schema": "https://biomejs.dev/schemas/2.3.5/schema.json",
+		"formatter": {
+			"enabled": true,
+			"indentStyle": "space",
+			"indentWidth": 4,
+			"lineWidth": 120
+		},
+		"linter": {
+			"enabled": true,
+			"rules": {
+				"recommended": true
+			}
+		},
+		"organizeImports": {
+			"enabled": true
+		},
+		"files": {
+			"ignore": [
+				"node_modules",
+				"dist",
+				"build"
+			]
+		}
+	}
+}
