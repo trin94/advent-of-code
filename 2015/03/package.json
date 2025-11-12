@@ -1,0 +1,13 @@
+{
+	"name": "03",
+	"module": "index.ts",
+	"type": "module",
+	"private": true,
+	"devDependencies": {
+		"@biomejs/biome": "^2.3.5",
+		"@types/bun": "latest"
+	},
+	"peerDependencies": {
+		"typescript": "^5"
+	}
+}
