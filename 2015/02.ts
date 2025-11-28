@@ -1,5 +1,5 @@
 export async function part1(): Promise<number> {
-	const filename = "01.input.txt";
+	const filename = "input/02.txt";
 	const foo = Bun.file(filename);
 	const text = await foo.text();
 
@@ -25,7 +25,7 @@ export function calculatePaper(dimensions: string): number {
 }
 
 export async function part2(): Promise<number> {
-	const filename = "01.input.txt";
+	const filename = "input/02.txt";
 	const foo = Bun.file(filename);
 	const text = await foo.text();
 

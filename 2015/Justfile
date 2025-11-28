@@ -11,5 +11,5 @@ _default:
 @format:
 	bun biome check --write .
 
-@test:
-	bun test
+@test DAY:
+	bun test {{ DAY }}

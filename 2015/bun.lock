@@ -1,8 +1,9 @@
 {
   "lockfileVersion": 1,
+  "configVersion": 0,
   "workspaces": {
     "": {
-      "name": "02",
+      "name": "03",
       "devDependencies": {
         "@biomejs/biome": "^2.3.5",
         "@types/bun": "latest",

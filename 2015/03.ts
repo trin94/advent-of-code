@@ -30,14 +30,14 @@ class JavaScriptSucksSet<E extends Identifiable> {
 }
 
 export async function part1(): Promise<number> {
-	const filename = "input.txt";
+	const filename = "input/03.txt";
 	const foo = Bun.file(filename);
 	const movements = await foo.text();
 	return countDeliveries(movements);
 }
 
 export async function part2(): Promise<number> {
-	const filename = "input.txt";
+	const filename = "input/03.txt";
 	const foo = Bun.file(filename);
 	const movements = await foo.text();
 	return countDeliveriesWithSupport(movements);
