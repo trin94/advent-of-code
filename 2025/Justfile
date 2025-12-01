@@ -1,0 +1,76 @@
+DAY := '01'
+
+alias fmt := format
+
+_default:
+    @just --list
+
+# Test code
+test *ARGS:
+    go clean -testcache
+    go test './{{ DAY }}' {{ ARGS }}
+
+# Format code
+format:
+    go fmt './{{ DAY }}'
+
+add-day DAY SAMPLE="1":
+    #!/usr/bin/env bash
+    IDENTIFIER="$(seq -f "%02g" {{ DAY }} {{ DAY }})"
+    mkdir "$IDENTIFIER" || exit 1
+
+    touch "inputs/$IDENTIFIER-input.{{ SAMPLE }}.txt"
+    touch "inputs/$IDENTIFIER-sample.{{ SAMPLE }}.txt"
+
+    cat > "$IDENTIFIER/solution.go" <<EOF
+    package main
+
+    func solvePuzzle1(path string) int {
+    	// lines := inputs.ReadLinesFrom(path)
+    	return 0
+    }
+
+    func solvePuzzle2(path string) int {
+    	// lines := inputs.ReadLinesFrom(path)
+    	return 0
+    }
+    EOF
+
+    cat > "$IDENTIFIER/solution_test.go" <<EOF
+    package main
+
+    import (
+    	"github.com/stretchr/testify/assert"
+    	"testing"
+    	"trin94/aoc/2025/inputs"
+    )
+
+    func TestSample1(t *testing.T) {
+    	input := inputs.Sample({{ DAY }})
+    	expected := 1
+    	actual := solvePuzzle1(input)
+    	assert.Equal(t, expected, actual)
+    }
+
+    // func TestPuzzle1(t *testing.T) {
+    // 	input := inputs.Input({{ DAY }})
+    // 	expected := 1
+    // 	actual := solvePuzzle1(input)
+    // 	assert.Equal(t, expected, actual)
+    // }
+
+    // func TestSample2(t *testing.T) {
+    // 	input := inputs.Sample({{ DAY }})
+    // 	expected := 1
+    // 	actual := solvePuzzle2(input)
+    // 	assert.Equal(t, expected, actual)
+    // }
+
+    // func TestPuzzle2(t *testing.T) {
+    // 	input := inputs.Input({{ DAY }})
+    // 	expected := 1
+    // 	actual := solvePuzzle2(input)
+    // 	assert.Equal(t, expected, actual)
+    // }
+    EOF
+    just format
