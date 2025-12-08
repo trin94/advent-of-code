@@ -1,4 +1,4 @@
-DAY := '07'
+DAY := '08'
 
 alias fmt := format
 
